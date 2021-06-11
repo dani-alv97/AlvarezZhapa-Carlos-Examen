@@ -1,6 +1,7 @@
 package ec.edu.ups.controlador;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -74,14 +75,6 @@ public class TarjetaCreditoBean implements Serializable{
 		this.listaPedido = listaPedido;
 	}
 
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-
 	public String getNumeroTarjeta() {
 		return numeroTarjeta;
 	}
@@ -112,6 +105,10 @@ public class TarjetaCreditoBean implements Serializable{
 
 	public void setCodigoVerificacion(int codigoVerificacion) {
 		this.codigoVerificacion = codigoVerificacion;
+	}
+	
+	public void crearTarjeta () {
+		ejbTarjeta.create(new TarjetaCredito(0, numeroTarjeta, nombreTitular, fechaCaducidad, codigoVerificacion, null));
 	}
 	
 }

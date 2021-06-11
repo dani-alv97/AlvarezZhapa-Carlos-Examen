@@ -13,7 +13,6 @@ import javax.inject.Named;
 import ec.edu.ups.ejb.ComidaFacade;
 import ec.edu.ups.ejb.PedidoFacade;
 import ec.edu.ups.ejb.TarjetaCreditoFacade;
-import ec.edu.ups.entidades.Categoria;
 import ec.edu.ups.modelo.Comida;
 import ec.edu.ups.modelo.Pedido;
 import ec.edu.ups.modelo.TarjetaCredito;
@@ -41,6 +40,7 @@ public class PedidoBean implements Serializable{
 	private String observaciones;
 	private String nombre;
 	private double precioU;
+	private String numeroTarjeta;
 	
 	
 	
@@ -61,6 +61,14 @@ public class PedidoBean implements Serializable{
 
 	public void setEjbComida(ComidaFacade ejbComida) {
 		this.ejbComida = ejbComida;
+	}
+
+	public String getNumeroTarjeta() {
+		return numeroTarjeta;
+	}
+
+	public void setNumeroTarjeta(String numeroTarjeta) {
+		this.numeroTarjeta = numeroTarjeta;
 	}
 
 	public TarjetaCreditoFacade getEjbTarjeta() {
@@ -101,14 +109,6 @@ public class PedidoBean implements Serializable{
 
 	public void setListaComida(List<Comida> listaComida) {
 		this.listaComida = listaComida;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
 	}
 	
 	public Date getFecha() {
@@ -175,24 +175,15 @@ public class PedidoBean implements Serializable{
 		this.precioU = precioU;
 	}
 
-	public String agregarComida() {
-		ejbComida.create(new Comida(0, nombre, precioU, pedidoComida));
+	public void agregarPedido() {
+		ejbPedido.create(new Pedido(0, fecha, nombreCliente, subTotal, iva, subTotal, observaciones, buscarTarjeta(numeroTarjeta), listaComida));
 	}
 	
-	public Categoria buscarCategoria(String nombre) {
-		int salida=0;		
-		for(int i=0;i<this.getCategoriasBodega().size();i++) {			
-			if(this.getCategoriasBodega().get(i).getNombre().equals(nombre)) {
-				salida=i;
-			}
-		}		
-		return this.getCategoriasBodega().get(salida);
-	}
 	
-	public Categoria buscarTarjeta(String numeroTarjeta) {
+	public TarjetaCredito buscarTarjeta(String numeroTarjet) {
 		int salida=0;		
-		for(int i=0;i<this.getListaTarjeta()().size();i++) {			
-			if(this.getListaTarjeta().get(i).getNumeroTarjeta().equals(numeroTarjeta)) {
+		for(int i=0;i<this.getListaTarjeta().size();i++) {			
+			if(this.getListaTarjeta().get(i).getNumeroTarjeta().equals(numeroTarjet)) {
 				salida=i;
 			}
 		}		

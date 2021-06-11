@@ -26,6 +26,8 @@ public class ComidaBean implements Serializable{
 	private PedidoFacade ejbPedido;
 	private List<Pedido> listaPedido;
 	private List<Comida> listaComida;
+	private String nombre;
+	private double precioU;
 	public ComidaBean() {
 		
 	}
@@ -57,6 +59,20 @@ public class ComidaBean implements Serializable{
 	}
 	public void setListaComida(List<Comida> listaComida) {
 		this.listaComida = listaComida;
+	}
+	
+	public void crearComida() {
+		ejbComida.create(new Comida(0, nombre, precioU, null));
+	}
+	
+	public Pedido buscarPedido(int numero) {
+		int salida=0;		
+		for(int i=0;i<this.getListaPedido().size();i++) {			
+			if(this.getListaPedido().get(i).getNumero()) {
+				salida=i;
+			}
+		}		
+		return this.getListaPedido().get(salida);
 	}
 	
 }
